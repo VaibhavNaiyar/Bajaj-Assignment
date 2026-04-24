@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --bg:      #0f1117;
+  --surface: #1a1d27;
+  --border:  #2a2d3a;
+  --accent:  #6c63ff;
+  --accent2: #4ecdc4;
+  --text:    #e2e8f0;
+  --muted:   #64748b;
+  --error:   #ff6b6b;
+  --success: #51cf66;
+  --warn:    #ffd43b;
+  --radius:  12px;
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar             { width: 6px; height: 6px; }
+::-webkit-scrollbar-track       { background: transparent; }
+::-webkit-scrollbar-thumb       { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ── Tree visualisation ─────────────────────────────────────────────────────── */
+.tree-root-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tree-children {
+  position: relative;
+  padding-left: 22px;
+  margin-top: 2px;
+  margin-left: 13px;
+  border-left: 1px solid var(--border);
+}
+
+.tree-child-item {
+  position: relative;
+  padding-top: 5px;
+}
+
+.tree-child-item::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 19px;
+  width: 22px;
+  height: 1px;
+  background: var(--border);
+}
+
+.node-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  transition: transform 0.15s;
+}
+
+.node-dot:hover { transform: scale(1.15); }
+
+.node-dot-root {
+  background: rgba(108, 99, 255, 0.28);
+  border: 2px solid var(--accent);
+  color: var(--text);
+  width: 28px;
+  height: 28px;
+}
+
+.node-dot-child {
+  background: rgba(108, 99, 255, 0.1);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+/* ── Gradient text helper ───────────────────────────────────────────────────── */
+.grad-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Spinner ────────────────────────────────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ── Fade-in animation ──────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.fade-up { animation: fadeUp 0.3s ease both; }
