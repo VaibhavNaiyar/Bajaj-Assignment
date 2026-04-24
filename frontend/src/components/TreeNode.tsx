@@ -11,7 +11,9 @@ export default function TreeNode({ name, subtree, isRoot = false }: Props) {
 
   return (
     <div className="tree-root-wrap">
-      <div className={`node-dot ${isRoot ? 'node-dot-root' : 'node-dot-child'}`}>{name}</div>
+      <div className={`node-dot ${isRoot ? 'node-dot-root' : 'node-dot-child'}`}>
+        {name}
+      </div>
 
       {children.length > 0 && (
         <div className="tree-children">

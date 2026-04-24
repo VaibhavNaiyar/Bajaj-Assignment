@@ -1,22 +1,35 @@
 import type { Metadata } from 'next';
+import { Playfair_Display, Lora, DM_Sans } from 'next/font/google';
 import './globals.css';
 
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-display',
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+
+const lora = Lora({
+  subsets: ['latin'],
+  variable: '--font-body',
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-ui',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: 'BFHL — SRM Full Stack Challenge',
-  description: 'Tree Hierarchy Processor · SRM Full Stack Engineering Challenge',
+  title: 'BFHL — Tree Hierarchy Processor',
+  description: 'SRM Full Stack Engineering Challenge',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${playfair.variable} ${lora.variable} ${dmSans.variable}`}>
       <body>{children}</body>
     </html>
   );

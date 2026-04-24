@@ -9,20 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg:      'var(--bg)',
-        surface: 'var(--surface)',
-        border:  'var(--border)',
-        accent:  'var(--accent)',
-        accent2: 'var(--accent2)',
+        peach:   'var(--peach)',
+        taupe:   'var(--taupe)',
+        brown:   'var(--brown)',
+        dark:    'var(--dark)',
         muted:   'var(--muted)',
         danger:  'var(--error)',
-        warn:    'var(--warn)',
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
-      },
-      gridTemplateColumns: {
-        'app': '400px 1fr',
+        display: ['var(--font-display)', 'Georgia', 'serif'],
+        body:    ['var(--font-body)',    'Georgia', 'serif'],
+        ui:      ['var(--font-ui)',      'system-ui', 'sans-serif'],
       },
     },
   },

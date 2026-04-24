@@ -8,68 +8,60 @@ interface Props {
 
 export default function TreeCard({ hierarchy, isLargest }: Props) {
   const { root, tree, depth, has_cycle } = hierarchy;
-  const subtree = has_cycle ? null : (tree as Record<string, Record<string, unknown>>)[root];
+  const subtree = !has_cycle
+    ? (tree as Record<string, Record<string, unknown>>)[root] ?? {}
+    : null;
 
   return (
     <div
       className="rounded-xl p-4 flex flex-col gap-3"
       style={{
-        background: 'var(--bg)',
-        border: `1px solid ${has_cycle ? 'rgba(255,107,107,.35)' : 'var(--border)'}`,
+        background: has_cycle ? 'rgba(184,58,26,0.04)' : '#FFF8F0',
+        border: `1px solid ${has_cycle ? 'rgba(184,58,26,0.2)' : 'var(--border)'}`,
+        boxShadow: '0 1px 6px rgba(102,73,48,0.07)',
       }}
     >
-      {/* Card header */}
+      {/* Header */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--muted)' }}>
-          Root:
+        <span className="text-[11px]" style={{ color: 'var(--muted)', fontFamily: 'var(--font-ui)' }}>
+          Root
         </span>
-        <span className="font-bold text-[15px]" style={{ color: 'var(--text)' }}>
+        <span
+          className="font-display italic text-[17px]"
+          style={{ color: 'var(--dark)' }}
+        >
           {root}
         </span>
 
         {has_cycle ? (
-          <Badge variant="cycle">⟳ Cycle</Badge>
+          <span className="badge badge-red">↻ cycle</span>
         ) : (
-          <Badge variant="depth">depth {depth}</Badge>
+          <span className="badge badge-taupe">depth {depth}</span>
         )}
 
-        {isLargest && <Badge variant="largest">★ Largest</Badge>}
+        {isLargest && (
+          <span className="badge badge-best">★ largest</span>
+        )}
       </div>
 
-      {/* Tree or cycle message */}
+      {/* Divider */}
+      <div className="warm-divider" />
+
+      {/* Tree or message */}
       {has_cycle ? (
-        <p className="text-[12px] italic" style={{ color: 'var(--muted)' }}>
-          Cyclic group — no tree structure available.
+        <p
+          className="text-[12px] italic"
+          style={{ color: 'var(--error)', fontFamily: 'var(--font-body)' }}
+        >
+          This group forms a cycle — no tree structure to display.
         </p>
-      ) : subtree ? (
-        <TreeNode name={root} subtree={subtree as Record<string, never>} isRoot />
       ) : (
-        // Single node (no children)
-        <TreeNode name={root} subtree={{}} isRoot />
+        <TreeNode
+          name={root}
+          subtree={subtree as Record<string, never>}
+          isRoot
+        />
       )}
     </div>
-  );
-}
-
-function Badge({
-  children,
-  variant,
-}: {
-  children: React.ReactNode;
-  variant: 'cycle' | 'depth' | 'largest';
-}) {
-  const styles: Record<typeof variant, React.CSSProperties> = {
-    cycle:   { background: 'rgba(255,107,107,.15)', color: 'var(--error)',   border: '1px solid rgba(255,107,107,.25)' },
-    depth:   { background: 'rgba(78,205,196,.12)',  color: 'var(--accent2)', border: '1px solid rgba(78,205,196,.25)' },
-    largest: { background: 'rgba(108,99,255,.15)',  color: 'var(--accent)',  border: '1px solid rgba(108,99,255,.25)' },
-  };
-
-  return (
-    <span
-      className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full"
-      style={styles[variant]}
-    >
-      {children}
-    </span>
   );
 }
